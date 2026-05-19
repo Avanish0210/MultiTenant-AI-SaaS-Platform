@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: ProjectAI
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/Project_AI
+    username: postgres
+    password: avanish7080
