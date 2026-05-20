@@ -5,7 +5,7 @@ import com.ProjectAI.dto.subscription.UsageTodayResponse;
 import org.jspecify.annotations.Nullable;
 
 public interface UsageService {
-    @Nullable UsageTodayResponse getTodayUsageOfUser(Long userId);
+    UsageTodayResponse getTodayUsageOfUser(Long userId);
 
-    @Nullable PlanLimitsResponse getCurrentSubscriptionLimitsOfUser(Long userId);
+    PlanLimitsResponse getCurrentSubscriptionLimitsOfUser(Long userId);
 }

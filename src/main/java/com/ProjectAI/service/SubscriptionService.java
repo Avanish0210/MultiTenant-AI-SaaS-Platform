@@ -8,9 +8,9 @@ import org.jspecify.annotations.Nullable;
 
 public interface SubscriptionService {
 
-    @Nullable SubscriptionResponse getCurrentSubscription(Long userId);
+    SubscriptionResponse getCurrentSubscription(Long userId);
 
-    @Nullable CheckoutResponse createCheckoutSessionUrl(CheckoutRequest request, Long userId);
+    CheckoutResponse createCheckoutSessionUrl(CheckoutRequest request, Long userId);
 
-    @Nullable PortalResponse openCustomerPortal(Long userId);
+    PortalResponse openCustomerPortal(Long userId);
 }

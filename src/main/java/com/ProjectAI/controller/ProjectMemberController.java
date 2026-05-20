@@ -2,6 +2,7 @@ package com.ProjectAI.controller;
 
 import com.ProjectAI.dto.member.InviteMemberRequest;
 import com.ProjectAI.dto.member.MemberResponse;
+import com.ProjectAI.dto.member.UpdateMemberRoleRequest;
 import com.ProjectAI.entity.ProjectMember;
 import com.ProjectAI.service.ProjectMemberService;
 import lombok.RequiredArgsConstructor;
@@ -19,13 +20,13 @@ public class ProjectMemberController {
     private final ProjectMemberService projectMemberService;
 
     @GetMapping
-    public ResponseEntity<List<ProjectMember>> getMembers(@PathVariable Long projectId){
+    public ResponseEntity<List<MemberResponse>> getMembers(@PathVariable Long projectId){
         Long userId = 1L;
         return ResponseEntity.ok(projectMemberService.getProjectMembers(projectId , userId));
     }
 
     @PostMapping
-    public ResponseEntity<ProjectMember> inviteMember(@PathVariable Long projectId, @RequestBody InviteMemberRequest request){
+    public ResponseEntity<MemberResponse> inviteMember(@PathVariable Long projectId, @RequestBody InviteMemberRequest request){
         Long userId = 1L;
         return ResponseEntity.status(HttpStatus.CREATED).body(
                 projectMemberService.inviteMember(projectId , request , userId)
@@ -36,7 +37,7 @@ public class ProjectMemberController {
     public ResponseEntity<MemberResponse> updateMemberRole(
             @PathVariable Long projectId,
             @PathVariable Long memberId,
-            @RequestParam InviteMemberRequest request
+            @RequestBody UpdateMemberRoleRequest request
     ){
         Long userId = 1L;
         return ResponseEntity.ok(projectMemberService.updateMemberRolee(projectId , memberId  , request , userId));

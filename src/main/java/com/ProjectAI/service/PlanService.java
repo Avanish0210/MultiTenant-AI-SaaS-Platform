@@ -6,5 +6,5 @@ import org.jspecify.annotations.Nullable;
 import java.util.List;
 
 public interface PlanService {
-    @Nullable List<PlanResponse> getAllActivePlans();
+    List<PlanResponse> getAllActivePlans();
 }
