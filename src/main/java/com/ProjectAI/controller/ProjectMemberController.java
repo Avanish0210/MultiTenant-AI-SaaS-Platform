@@ -3,7 +3,6 @@ package com.ProjectAI.controller;
 import com.ProjectAI.dto.member.InviteMemberRequest;
 import com.ProjectAI.dto.member.MemberResponse;
 import com.ProjectAI.dto.member.UpdateMemberRoleRequest;
-import com.ProjectAI.entity.ProjectMember;
 import com.ProjectAI.service.ProjectMemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -45,11 +44,12 @@ public class ProjectMemberController {
     }
 
     @DeleteMapping("/{memberId}")
-    public ResponseEntity<MemberResponse> updateMemberRole(
+    public ResponseEntity<Void> removeMember(
             @PathVariable Long projectId,
             @PathVariable Long memberId
     ) {
         Long userId = 1L;
-        return ResponseEntity.ok(projectMemberService.deleteProjectMember(projectId, memberId, userId));
+        projectMemberService.removeProjectMember(projectId, memberId, userId);
+        return ResponseEntity.noContent().build();
     }
 }
