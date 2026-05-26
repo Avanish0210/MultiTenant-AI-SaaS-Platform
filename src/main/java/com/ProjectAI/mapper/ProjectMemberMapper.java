@@ -5,7 +5,6 @@ import com.ProjectAI.entity.ProjectMember;
 import com.ProjectAI.entity.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.Mappings;
 
 @Mapper(componentModel = "spring")
 public interface ProjectMemberMapper {
@@ -15,7 +14,7 @@ public interface ProjectMemberMapper {
     MemberResponse toProjectMemberResponseFromOwner(User owner);
 
     @Mapping(target = "userId" , source = "user.id")
-    @Mapping(target = "email" , source = "user.email")
+    @Mapping(target = "username", source = "user.username")
     @Mapping(target = "name" , source = "user.name")
     MemberResponse toProjectMemberResponseFromMember(ProjectMember projectMember);
 
