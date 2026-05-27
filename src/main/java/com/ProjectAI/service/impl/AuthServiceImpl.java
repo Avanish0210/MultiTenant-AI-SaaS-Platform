@@ -7,9 +7,13 @@ import com.ProjectAI.entity.User;
 import com.ProjectAI.error.BadRequestException;
 import com.ProjectAI.mapper.UserMapper;
 import com.ProjectAI.repository.UserRepository;
+import com.ProjectAI.security.AuthUtil;
 import com.ProjectAI.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.jspecify.annotations.Nullable;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +24,8 @@ public class AuthServiceImpl implements AuthService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final UserMapper userMapper;
+    private final AuthUtil authUtil;
+    private final AuthenticationManager authenticationManager;
 
     @Override
     public AuthResponse signup(SignupRequest signupRequest) {
@@ -30,11 +36,19 @@ public class AuthServiceImpl implements AuthService {
         user.setPassword(passwordEncoder.encode(signupRequest.password()));
         user  = userRepository.save(user);
 
-        return new AuthResponse("dummy" , userMapper.toUserProfileResponse(user));
+        String token = authUtil.generateAccessToken(user);
+        return new AuthResponse(token , userMapper.toUserProfileResponse(user));
     }
 
     @Override
     public AuthResponse login(LoginRequest loginRequest) {
-        return null;
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(loginRequest.username() ,loginRequest.password() )
+        );
+
+        User user = (User) authentication.getPrincipal();
+        String token = authUtil.generateAccessToken(user);
+
+        return new AuthResponse(token , userMapper.toUserProfileResponse(user));
     }
 }
