@@ -17,6 +17,7 @@ import com.ProjectAI.security.AuthUtil;
 import com.ProjectAI.service.ProjectService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -41,9 +42,10 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public ProjectResponse getUserProjectById(Long id) {
+    @PreAuthorize("@security.canViewMembers(#projectId)")
+    public ProjectResponse getUserProjectById(Long projectId) {
         Long userId = authUtil.getCurrentUserId();
-        Project project = getAccessibleProjectById(id , userId);
+        Project project = getAccessibleProjectById(projectId , userId);
         return projectMapper.toProjectResponse(project);
     }
 
@@ -73,10 +75,11 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public ProjectResponse updateProejct(Long id, ProjectRequest projectRequest) {
+    @PreAuthorize("@security.canViewMembers(#projectId)")
+    public ProjectResponse updateProejct(Long projectId, ProjectRequest projectRequest) {
         Long userId = authUtil.getCurrentUserId();
 
-        Project project = getAccessibleProjectById(id , userId);
+        Project project = getAccessibleProjectById(projectId , userId);
 
         project.setName(projectRequest.name());
         project = projectRepository.save(project);
@@ -85,9 +88,10 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public void softDelete(Long id) {
+    @PreAuthorize("@security.canViewMembers(#projectId)")
+    public void softDelete(Long projectId) {
         Long userId = authUtil.getCurrentUserId();
-        Project project = getAccessibleProjectById(id , userId);
+        Project project = getAccessibleProjectById(projectId , userId);
 
         project.setDeletedAt(Instant.now());
         projectRepository.save(project);
