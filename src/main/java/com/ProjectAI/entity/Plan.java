@@ -19,7 +19,7 @@ public class Plan {
     String name;
 
     @Column(unique = true)
-    String stipePriceId;
+    String stripePriceId;
     Integer maxProduct;
     Integer maxTokensPerDay;
     Integer maxPreviews;

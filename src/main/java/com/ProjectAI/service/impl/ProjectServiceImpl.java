@@ -8,6 +8,7 @@ import com.ProjectAI.entity.ProjectMember;
 import com.ProjectAI.entity.ProjectMemberId;
 import com.ProjectAI.entity.User;
 import com.ProjectAI.enums.ProjectRole;
+import com.ProjectAI.error.BadRequestException;
 import com.ProjectAI.error.ResourceNotFoundException;
 import com.ProjectAI.mapper.ProjectMapper;
 import com.ProjectAI.repository.ProjectMemberRepository;
@@ -15,6 +16,7 @@ import com.ProjectAI.repository.ProjectRepository;
 import com.ProjectAI.repository.UserRepository;
 import com.ProjectAI.security.AuthUtil;
 import com.ProjectAI.service.ProjectService;
+import com.ProjectAI.service.SubscriptionService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -31,6 +33,7 @@ public class ProjectServiceImpl implements ProjectService {
     private final ProjectMapper projectMapper;
     private final ProjectMemberRepository projectMemberRepository;
     private final AuthUtil authUtil;
+    private final SubscriptionService subscriptionService;
 
 
     @Override
@@ -51,6 +54,10 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public ProjectResponse createProject(ProjectRequest projectRequest) {
+        if(!subscriptionService.canCreateNewProject()) {
+            throw new BadRequestException("User cannot create a New project with current Plan, Upgrade plan now.");
+        }
+
         Long userId = authUtil.getCurrentUserId();
 //        User owner = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User", userId.toString()));
         User owner = userRepository.getOne(userId);
