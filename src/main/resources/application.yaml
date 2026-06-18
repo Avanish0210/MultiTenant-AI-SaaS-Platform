@@ -37,3 +37,14 @@ stripe:
     secret: ${WENHOOK-SECRET}
 
 client.url: http://localhost:8080
+
+logging:
+  level:
+    org.springframework.ai:
+      chat.client: DEBUG
+
+minio:
+  url:
+  access-key:
+  secret-key:
+  project-bucket:

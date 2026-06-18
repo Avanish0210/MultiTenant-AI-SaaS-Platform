@@ -1,25 +1,40 @@
 package com.ProjectAI.entity;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.Setter;
+import jakarta.persistence.*;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.mapstruct.Mapping;
 
-import java.security.Timestamp;
 import java.time.Instant;
 
+@Entity
+@Table(name = "project_files")
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ProjectFile {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
-    Project projectId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "project_id" , nullable = false)
+    Project project;
+
+    @Column(nullable = false)
     String path;
+
     String minioObjectKey;
-    User createdBy;
-    User  updatedBy;
+
+    @CreationTimestamp
     Instant createdAt;
+    @UpdateTimestamp
     Instant updatedAt;
 
 }
