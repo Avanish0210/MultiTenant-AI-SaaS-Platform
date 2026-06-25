@@ -1,6 +1,7 @@
 package com.ProjectAI.service.impl;
 
 import com.ProjectAI.llm.PromptUtils;
+import com.ProjectAI.llm.tools.CodeGenerationTools;
 import com.ProjectAI.security.AuthUtil;
 import com.ProjectAI.service.AiGenerationService;
 import com.ProjectAI.service.ProjectFileService;
@@ -40,6 +41,8 @@ public class AiGenerationServiceImpl implements AiGenerationService {
         );
 
         StringBuilder fullResponseBuffer = new StringBuilder();
+
+        CodeGenerationTools codeGenerationTools = new CodeGenerationTools(projectFileService , projectId);
 
         return chatClient.prompt()
                 .system(PromptUtils.CODE_GENERATION_SYSTEM_PROMPT)

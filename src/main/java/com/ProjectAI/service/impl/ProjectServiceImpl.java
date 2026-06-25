@@ -16,6 +16,7 @@ import com.ProjectAI.repository.ProjectRepository;
 import com.ProjectAI.repository.UserRepository;
 import com.ProjectAI.security.AuthUtil;
 import com.ProjectAI.service.ProjectService;
+import com.ProjectAI.service.ProjectTemplateService;
 import com.ProjectAI.service.SubscriptionService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -34,6 +35,7 @@ public class ProjectServiceImpl implements ProjectService {
     private final ProjectMemberRepository projectMemberRepository;
     private final AuthUtil authUtil;
     private final SubscriptionService subscriptionService;
+    ProjectTemplateService projectTemplateService;
 
 
     @Override
@@ -78,6 +80,8 @@ public class ProjectServiceImpl implements ProjectService {
                 .project(project)
                 .build();
         projectMemberRepository.save(projectMember);
+
+        projectTemplateService.initializeProjectFromTemplate(project.getId());
         return projectMapper.toProjectResponse(project);
     }
 
