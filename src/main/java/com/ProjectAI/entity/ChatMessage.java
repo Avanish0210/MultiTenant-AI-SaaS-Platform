@@ -7,6 +7,7 @@ import lombok.experimental.FieldDefaults;
 
 
 import java.time.Instant;
+import java.util.List;
 
 @Entity
 @Table(name = "chat_messages")
@@ -29,7 +30,11 @@ public class ChatMessage {
     })
     ChatSession chatSession;
 
-    @Column(columnDefinition = "text" , nullable = false)
+    @OneToMany(mappedBy = "chatMessage", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OrderBy("sequenceOrder ASC")
+    List<ChatEvent> events;
+
+    @Column(columnDefinition = "text")
     String content;
 
     @Enumerated(EnumType.STRING)
