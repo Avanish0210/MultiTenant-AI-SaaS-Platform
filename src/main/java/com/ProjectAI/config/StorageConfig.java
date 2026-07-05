@@ -3,11 +3,12 @@ package com.ProjectAI.config;
 import io.minio.MinioClient;
 import lombok.Data;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ConditionalOnProperty(prefix = "minio")
+@ConfigurationProperties(prefix = "minio")
 @Data
 public class StorageConfig {
 

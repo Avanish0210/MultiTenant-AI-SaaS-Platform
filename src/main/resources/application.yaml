@@ -19,7 +19,7 @@ spring:
 
   ai:
     openai:
-      api-key:
+      api-key: njfbdfhbjdfkjzdjkfkzjbfkhjbdkhbfkhbdfkhbd
       base-url: https://openrouter.ai/api
       chat:
         options:
@@ -45,7 +45,7 @@ logging:
       chat.client: DEBUG
 
 minio:
-  url:
-  access-key:
-  secret-key:
-  project-bucket:
+  url: http://127.0.0.1:9000
+  access-key: avanish
+  secret-key: avanish7080
+  project-bucket: project-ai-basket
