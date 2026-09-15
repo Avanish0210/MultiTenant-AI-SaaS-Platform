@@ -3,9 +3,9 @@ spring:
     name: ProjectAI
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/Project_AI
-    username: postgres
-    password: avanish7080
+    url: ${DATASOURCE_URL}
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
     driver-class-name: org.postgresql.Driver
 
   jpa:
@@ -18,14 +18,19 @@ spring:
         format_sql: false
 
   ai:
-    openai:
-      api-key: njfbdfhbjdfkjzdjkfkzjbfkhjbdkhbfkhbdfkhbd
-      base-url: https://openrouter.ai/api
-      chat:
-        options:
-#          model: openai/gpt-5.2-codex
-          model: google/gemini-3-flash-preview
-          temperature: 0.0
+    google:
+      genai:
+        api-key: ${API_KEY}
+        chat:
+          model: gemini-3.6-flash
+        embedding:
+          api-key: ${API_KEY}
+          text:
+            dimensions: 768
+    vectorstore:
+      pgvector:
+        dimensions: 768
+        initialize-schema: true
 
 
 jwt:
