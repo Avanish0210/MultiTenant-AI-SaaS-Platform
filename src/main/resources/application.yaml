@@ -22,7 +22,8 @@ spring:
       genai:
         api-key: ${API_KEY}
         chat:
-          model: gemini-3.6-flash
+          options:
+            model: gemini-3.6-flash
         embedding:
           api-key: ${API_KEY}
           text:

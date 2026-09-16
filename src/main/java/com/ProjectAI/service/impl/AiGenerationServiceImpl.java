@@ -49,7 +49,7 @@ public class AiGenerationServiceImpl implements AiGenerationService {
     @PreAuthorize("@security.canEditProject(#projectId)")
     public Flux<String> streamResponse(String userMessage, Long projectId) {
         Long userId = authUtil.getCurrentUserId();
-        ChatSession chatSession = createChatSessionIfNotExists(userId, projectId);
+        ChatSession chatSession = createChatSessionIfNotExists(projectId, userId);
 
         Map<String , Object> adviceParams = Map.of(
                 "userId" , userId,

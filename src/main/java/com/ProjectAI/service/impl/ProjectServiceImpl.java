@@ -35,7 +35,7 @@ public class ProjectServiceImpl implements ProjectService {
     private final ProjectMemberRepository projectMemberRepository;
     private final AuthUtil authUtil;
     private final SubscriptionService subscriptionService;
-    ProjectTemplateService projectTemplateService;
+    private final ProjectTemplateService projectTemplateService;
 
 
     @Override
