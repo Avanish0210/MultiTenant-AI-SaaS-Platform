@@ -3,9 +3,9 @@ spring:
     name: ProjectAI
 
   datasource:
-    url: ${DATASOURCE_URL}
-    username: ${POSTGRES_USER}
-    password: ${POSTGRES_PASSWORD}
+    url: ${DATASOURCE_URL:jdbc:postgresql://localhost:9010/pgvector-test?sslmode=disable&options=-c%20timezone=UTC}
+    username: ${POSTGRES_USER:postgres}
+    password: ${POSTGRES_PASSWORD:password}
     driver-class-name: org.postgresql.Driver
 
   jpa:
@@ -16,16 +16,18 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: false
+        jdbc:
+          time_zone: UTC
 
   ai:
     google:
       genai:
-        api-key: ${API_KEY}
+        api-key: ${API_KEY:demo-gemini-key}
         chat:
           options:
             model: gemini-3.6-flash
         embedding:
-          api-key: ${API_KEY}
+          api-key: ${API_KEY:demo-gemini-key}
           text:
             dimensions: 768
     vectorstore:
@@ -39,11 +41,11 @@ jwt:
 
 stripe:
   api:
-    secret: ${STRIPE_SECRET}
+    secret: ${STRIPE_SECRET:sk_test_placeholder}
   webhook:
-    secret: ${WENHOOK-SECRET}
+    secret: ${WEBHOOK_SECRET:whsec_placeholder}
 
-client.url: http://localhost:8080
+client.url: http://localhost:3000
 
 logging:
   level:
